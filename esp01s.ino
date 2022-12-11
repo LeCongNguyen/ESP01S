@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include "zEEPROMtool.h"
+#include "zConnectToWifi.h"
 
 /* Put your SSID & Password */
 const char *ssid = "NodeMCU";       // Enter SSID here
@@ -30,10 +31,13 @@ work_mode:
     ledStatus();
     String wifiName = eepromReadString(0);
     String wifiPass = eepromReadString(wifiName.length() + 1);
+    const char *WIFI = wifiName.c_str(); // chuyển String sang const char *
+    const char *PASS = wifiPass.c_str();
     Serial.println();
     Serial.println("__work_mode__");
-    Serial.println(wifiName);
-    Serial.println(wifiPass);
+    Serial.println(WIFI);
+    Serial.println(PASS);
+    connectToWifi(WIFI, PASS);
     while (1)
     {
         yield();
